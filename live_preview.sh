@@ -20,7 +20,7 @@ echo "🔍 Locating Poetry environment..."
 VENV_PATH=$(poetry env info --path 2>/dev/null)
 
 if [ -z "$VENV_PATH" ]; then
-    echo "❌ No Poetry environment found. Run './setup.sh' first."
+    echo "❌ No Poetry environment found. Run 'poetry install --with docs' first."
     exit 1
 fi
 
