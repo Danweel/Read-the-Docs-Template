@@ -4,21 +4,19 @@
 
 # -- Path setup --------------------------------------------------------------
 
-# If extensions (or modules to document with autodoc) are in another directory,
-# add these directories to sys.path here.
 import pathlib
 import sys
 sys.path.insert(0, pathlib.Path(__file__).parents[2].resolve().as_posix())
-
+# Legacy line from autodocing, leave this until further notice to prevent stops.
 # ----------------------------------------------------------------------------
 
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = '[PROJECT NAME]',
-copyright = '20XX',
-author = '[AUTHOR NAME]',
+project = '[PROJECT NAME]'
+copyright = '20XX'
+author = '[AUTHOR NAME]'
 release = '0.0.1'
 # While you are setting up and making changes (unreadable):
 #release = '0.0.1'
@@ -34,21 +32,33 @@ release = '0.0.1'
 autodoc_mock_imports = ['pymodulefordocs']
 # ISSUE: The python script these docs are about isn't included, so this is to prevent a stopping error
 
-
 templates_path = ['_templates']
 
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
-
-#
 
 extensions = [
     'sphinx.ext.viewcode',         # Optional: Shows source code links if we ever host the .bpy
     'sphinx.ext.intersphinx',      # Allows sphinx to interact with other Read the Docs pages
     'sphinx.ext.todo',             # Allows for quick inline bugmaking on github
     'sphinxcontrib.mermaid',       # Required for Mermaid diagrams
-    'notfound.extension',          # Required for custom 404 page
+    'notfound.extension',          # Required for custom 404 page for aesthetics
+    'sphinx_copybutton',           # Copy button on code blocks (great for tutorials)
     'myst_parser'                  # Required for fullpage Markdown support in case contibutors are more comfortable writing .md files
 ]                                  # KNOWN ISSUE: myst_parser is in an odd format. This is normal but can throw warnings (that can be safely ignored)
+
+# -- Optional Rendering Extensions (uncomment and add to [ ] above if needed) --
+# 'sphinx_design',              # Cards, tabs, panels — great for organizing guides
+#                                # Requires: pip install sphinx-design
+#
+# 'sphinxcontrib.bibtex',        # BibTeX bibliography support for academic citations
+#                                # Requires: pip install sphinxcontrib-bibtex
+#
+# 'sphinx.ext.mathjax',          # Render LaTeX math ($...$) in HTML output
+#                                # Built into Sphinx — no extra install needed
+#                                # Enable 'dollarmath' in myst_enable_extensions too
+#
+# There are actually lots of extensions, once your build is working, you can add them here.
+# Important: Make sure the same packages here are reflected in the /docs/source/pyproject.toml as well. You may have to look up the name format for both files.
 
 # --------------------------------------------------------------------------
 
@@ -57,7 +67,6 @@ extensions = [
 # https://www.sphinx-doc.org/en/master/usage/extensions/viewcode.html
 
 viewcode_line_numbers = True
-# viewcode_find_source(app, modname)  # not sure we can use this. check.
 
 # --------------------------------------------------------------------------
 
@@ -67,13 +76,14 @@ viewcode_line_numbers = True
 
 #intersphinx_mapping = {
 #    'blender': ('https://docs.blender.org/api/current', None),  # you would set this to whatever you would want to incorporate
-    # ... other mappings
-}
+#     ... other mappings to any other documentation site that has a RTD page.
+#}
 
 # ---------------------------------------------------------------------------
 
 
 # -- Options for todo extension ---------------------------------------------
+# Turns todos on and off - you can type todo in caps in any file and create a github issue. Useful for editing.
 
 todo_include_todos = True
 

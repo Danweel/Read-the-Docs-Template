@@ -3,78 +3,96 @@ requires = ["poetry-core>=1.8.0"]
 build-backend = "poetry.core.masonry.api"
 
 # -----------------------------------------------------------------
-# PEP 621 metadata
+# PEP 621 metadata (Project Info)
 # -----------------------------------------------------------------
+# Replace [PROJECTNAME], [DESCRIPTION], [AUTHOR], and [EMAIL] below.
+# These placeholders must be updated for the project to be usable.
+
 [project]
-name = "[PROJECTNAME]"
+name = "PROJECT NAME"
 version = "0.1.0"
-description = "[DESCRIPTION]"
+description = "DESCRIPTION"
 readme = "README.md"
 license = {text = "CC-BY-SA-4.0"}
 # licence files = ["LICENSE"]  #OPTIONAL, points to a licence file
 authors = [
-    {name = "[NAME]", email = "[EMAIL]"},
-    {name = "[NAME2]"}          # optional second author
+    {name = "NAME", email = "AUTHOREMAIL"}, # it does check for an email
+    {name = "NAME2"}          # optional second author
 ]
 
-# ---- core runtime dependencies (inside the same [project] table) ----
-requires-python = ">=3.11"   # Once this line is present, the resolver no longer falls back to the historic “>=2.7,<2.8” default.
-
-# Python tool dependancies:
-# dependencies = [
-#    "sphinx>=7.2",
-#    "sphinx-rtd-theme>=2.0,<3.0",
-#    "readthedocs-build>=2.0"
-#]
-# Not needed here if Poetry is handling them (see the yaml)
+requires-python = ">=3.11"
+# Once this line is present, the resolver no longer falls back to the historic “>=2.7,<2.8” default.
 
 # -----------------------------------------------------------------
-# Poetry Groups
+# Poetry Configuration
 # -----------------------------------------------------------------
+# This template is for documentation-only projects — no installable
+# Python package. If your project includes a Python package (i.e., you
+# need `pip install .` to work), use Read-the-Docs-Template-Package instead:
+# https://github.com/Danweel/Read-the-Docs-Template-Package
+
  [tool.poetry]          # Don't need this group with autodoc2 - enable if using standard autodoc
- package-mode = false   # Tells Poetry not to expect a Python package (for now, we can add the script optionally later)
- packages = []          # No Python package to install
+ package-mode = false
+ packages = []
 
-# setup-python.sh script likely relies on the group structure. If you switch to package-mode = true later, you might migrate to optional-dependencies. Don't touch if there isn't a problem.
-
-[tool.poetry.extras]    # This defines the dependancies to install, then 'dependency groups' below define the minimum requirements for each item.
-docs = [
-    "sphinx",
-    "readthedocs-build",
-    "sphinxcontrib-mermaid",
-    "sphinx-notfound-page",
-    "groundwork-sphinx-theme",
-    "myst-parser"
-]
-dev = [
-    "sphinx",
-    "readthedocs-build",
-    "sphinxcontrib-mermaid",
-    "sphinx-notfound-page",
-    "groundwork-sphinx-theme",
-    "myst-parser",
-    "ruff"
-]
+ # Tells Poetry not to expect a Python package (for now, we can add the script optionally later)
+# No Python package to install
 
 # -----------------------------------------------------------------
 # Poetry Dependency Groups
 # -----------------------------------------------------------------
+# Used with: `poetry install --with docs`  OR  --with dev
+# Yes, they are the same in this version - there's no differnce between them. This is just to standardize a few of the instructions.
+# Read the Docs does NOT read from these; it uses requirements.txt.
+# Keep requirements.txt and these groups in sync when adding packages.
 
-[tool.poetry.group.docs.dependencies]  # use poetry install --with docs for regular contributors (light, strips out unnecessary tools)
-sphinx = "^8.0"
+[tool.poetry.group.docs.dependencies]  # use `poetry install --with docs` for regular contributors (light, strips out unnecessary tools)
+sphinx = ">=8.0,<9.0"
 readthedocs-build = "^2.0"
 sphinxcontrib-mermaid = "^2.0.1"
-sphinx-notfound-page = "^1.0.0"
-groundwork-sphinx-theme = "^1.1.1"     # because these are defined in the Core dependencies, this isn't strictly needed, but I'm using it in the setup script for clarity.
-myst-parser = "^5.0.0"                 # Keep myst_parser if you want full .md page support
-
-[tool.poetry.group.dev.dependencies]   # replaces deprecated [dev-dependencies], use poetry install --with dev to install everything required to maintain the Read the Docs project.
-sphinx = "^8.0"
-readthedocs-build = "^2.0"
-sphinxcontrib-mermaid = "^2.0.1"
+sphinx-copybutton = "^0.5.2"
 sphinx-notfound-page = "^1.0.0"
 groundwork-sphinx-theme = "^1.1.1"
-myst-parser = "^5.0.0"                 # Keep myst_parser if you want full .md page support
+myst-parser = "^5.0.0"
 
-# pytest = "^8.0"                      # Optional unless we add python code. Don't forget to add it back to tool.poetry.extras
-ruff = "^0.6"                          # Python linter, can help with .bpy files (not just for Python Libraries)
+# because these are defined in the Core dependencies, this isn't strictly needed, but I'm using it in the setup script for clarity.
+# Keep myst_parser if you want full .md page support
+
+[tool.poetry.group.dev.dependencies]   # use `poetry install --with dev` to install everything required to maintain the Read the Docs project.
+sphinx = ">=8.0,<9.0"
+readthedocs-build = "^2.0"
+sphinxcontrib-mermaid = "^2.0.1"
+sphinx-copybutton = "^0.5.2"
+sphinx-notfound-page = "^1.0.0"
+groundwork-sphinx-theme = "^1.1.1"
+myst-parser = "^5.0.0"
+
+# Keep myst_parser if you want full .md page support
+
+# -----------------------------------------------------------------
+# Theme Alternatives (Choose ONE — Leave the others commented out)
+# -----------------------------------------------------------------
+# Replace groundwork-sphinx-theme above with one of these if preferred.
+# Remember to also update html_theme in docs/source/conf.py.
+#
+# Furo (clean, modern, dark/light mode):
+#   furo = ">=2024.8.6"
+#
+# Sphinx RTD Theme (classic, widely recognized):
+#   sphinx-rtd-theme = ">=2.0.0"
+#
+# Sphinx Book Theme (long-form docs, book style):
+#   sphinx-book-theme = ">=1.0.0"
+
+# -----------------------------------------------------------------
+# Optional Documentation Enhancements (Uncomment and add to lists and .conf if wanted)
+# -----------------------------------------------------------------
+# Add these to the `docs` group above if you need them:
+#
+# sphinx-design = ">=0.6.0"            # Cards, tabs, panels — great for guides
+# sphinxcontrib-bibtex = ">=2.5.0"     # BibTeX bibliography support
+# sphinx-autobuild = ">=2021.3.14"     # Live reload during doc development
+# sphinxext-opengraph = ">=0.9.0"      # Social media preview cards
+# codespell = ">=2.2.0"                # Spell-check documentation
+
+# Make sure the same packages here are reflected in the /docs/source/conf.py as well. You may have to look up the name format for both files.

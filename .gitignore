@@ -64,7 +64,7 @@ env.bak/
 venv.bak/
 
 # Poetry (keep poetry.lock in version control for reproducibility)
-# poetry.lock
+poetry.lock
 
 # Poetry cache
 envs.toml

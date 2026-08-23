@@ -2,14 +2,62 @@
 
 **A minimal, production-ready documentation template** primarily for non-developers and business professionals. Built with [Sphinx](https://www.sphinx-doc.org/en/master/#), [Poetry](https://python-poetry.org/) for [Read the Docs](https://about.readthedocs.com/) and supports both [Markdown](https://www.markdownlang.com/basic/overview.html) and [reStructuredText](https://devguide.python.org/documentation/markup/).
 
-Perfect for creating **Employee Handbooks**, **Business Processes**, **Game Design Docs** for proposals, or **User Guides** on Read the Docs easily. It automates much of the initial set up to provide a basic project, giving you a clean, version-controlled starting point.
+## Why Provide This Template
 
-> *Need to add code?* No problem! Run `./setup-python.sh` to enable full Python package integration.
+### What This Template Is For
 
-**Why this template?** Read the Docs setup can be confusing. This template provides a pre-configured foundation that works out of the box. You get professional documentation hosting without wrestling with configuration files (too much).
+- Personal project documentation
+- Process documentation and guides
+- Small-team wikis
+- Tutorial and explainer sites
+- Anything where you write content by hand in `.rst` or `.md` files
+
+### What This Template Is NOT For
+
+- API reference documentation for a Python package (use
+  [Read-the-Docs-Template-Package](https://github.com/Danweel/Read-the-Docs-Template-Package))
+- Large-scale documentation requiring automated docstring extraction
+- Projects where the documentation is tightly/automatically coupled to source code
+
+Setting up Sphinx + Read the Docs from scratch involves a surprising
+number of interconnected decisions. Further, you can't just set `package-mode = false` in a Poetry project once you've built it in order to turn 'off' package functions. This version of the RTD template is focussed on **non-package docs-only** documentation projects, for when you don't have an application you're trying to auto-doc. It should be more common than it is, but I feel like setting up the environment to write documentation in a semi-professional way is too much of a wall for most, the way it's presented on RTD and Sphinx. Here, I've created a repo that's nearly ready to go already. These tools are powerful and the way I have it set up is not the only way to do it, but it prevents at least some of the hurdles I faced trying to set up a simple site.
+
+### The Problems
+
+1. **Sphinx version drift**: Read the Docs reads dependencies from
+   `requirements.txt`, while local development reads from `pyproject.toml`.
+   Because there's no package, the default process sometimes gets confusd and starts installing the wrong Sphinx into the project on build.
+
+2. **Autodoc errors**: Sphinx's `autodoc` extension tries to import
+   Python packages to extract docstrings. In a docs-only project, there's
+   no package to import. The common workaround is `autodoc_mock_imports`
+   to silence the errors but you can also just removes `autodoc` entirely, along with `viewcode`, `napoleon`, and the `sys.path` manipulation.
+
+3. **Poetry extras vs. PEP 621 extras**: Poetry is sometimes compliacted to
+   work with. Poetry's `[tool.poetry.extras]`
+   and PEP 621's `[project.optional-dependencies]` look similar but are
+   not interchangeable. `pip install .[docs]` only reads PEP 621 extras;
+   Poetry extras are invisible to pip. This matters because Read the Docs
+   uses pip, not Poetry. In a docs-only project using `requirements.txt`,
+   this is sidestepped entirely — but if you ever switch to package mode,
+   you must add `[project.optional-dependencies]` or RTD will silently
+   skip your dependencies. It's better to just build the project with packages from the start rather than switch half-way because of this. Building either-or from scratch is simpler than modifying everything to work after the fact.
+
+4. **Some minor settings and archetecture-pre set up**: Sphinx can output to `_build/`, `build/`, `html/`, or any directory. Different tutorials use different paths. This template standardizes on `docs/_build/` and ignores it in `.gitignore` so you're not uploading extra files, too. And a few other useful files as well, standard things you'd find in a repo.
 
 [![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+
 ---
+
+> ### Which template do I need?
+>
+> | Your project | Use this template |
+> |---|---|
+> | Documentation only (no Python package) | **You're in the right place** |
+> | Python package + documentation | [Read-the-Docs-Template-Package](https://github.com/Danweel/Read-the-Docs-Template-Package) |
+>
+> Not sure? If your repo doesn't have a `src/` folder or a `setup.py`,
+> you probably want this template (docs-only).
 
 # Quick Start
 
@@ -27,20 +75,40 @@ Recommended is [Python 3.12](https://www.python.org/downloads/), and [Github Des
 
 The script will detect your OS and install [Poetry](https://python-poetry.org/) for you automatically.
 
->### Windows Users
->This template uses Bash scripts for setup*. To run them:
->
->- **Install Git for Windows** (if you haven't already): [Download here](https://git-scm.com/download/win)
->- Right-click your project folder and select **"Git Bash Here"**.
->- Run the setup command: `./setup-python.sh`
->
->*The curl syntax differs slightly, so avoid PowerShell in this instance.
+### Windows Users (Windows 10/11)
+
+This template uses Bash scripts for setup and `make` for building
+documentation. Both are Unix-native tools, but they work on Windows
+with the right setup.
+
+#### Prerequisites
+
+1. **Install Git for Windows** (if you haven't already):
+   - Download from https://git-scm.com/download/win
+   - This installs Git Bash, which provides a Bash-compatible terminal
+   - During installation, select "Git from the command line" option
+
+2. **Install Python 3.12+**:
+   - Download from https://www.python.org/downloads/
+   - **Important:** During installation, check **"Add Python to PATH"**
+   - If you forget this, you'll need to add Python's install path manually:
+     1. Press `Win + S`, type "Environment Variables"
+     2. Click "Edit environment variables for your account"
+     3. Under "Path", click "New" and add your Python install path
+        (e.g., `C:\Users\[YourUsername]\AppData\Local\Programs\Python\Python312\`)
+     4. Restart your terminal
+
+3. **Verify installation** (in Git Bash):
+   ```bash
+   python --version    # Should show 3.12.x or higher
+   git --version       # Should show a git version
 
 ## 1. Clone the repository
-```
-   git clone https://github.com/[USERNAME]/[REPO-NAME].git
-   cd [REPO-NAME]
-```
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/Danweel/Read-the-Docs-Template.git my-project
+   cd my-project
 
 Or use Github Desktop to clone the `.git` at the URL above via the onscreen directions.
 
@@ -48,35 +116,43 @@ Or use Github Desktop to clone the `.git` at the URL above via the onscreen dire
 
 The script will:
 
-   ✅ Check for prerequisites (Python, Git, Poetry)
+   - Check for prerequisites (Python, Git, Poetry)
 
-   ✅ Install Poetry if missing
+   - Install Poetry if missing
 
-   ✅ Automatically run `poetry lock` and `poetry install` to set up dependencies
+   - Automatically run `poetry lock` and `poetry install` to set up dependencies
 
-   ✅ Ask for or set up your Git credentials (if needed)
+   - Ask for or set up your Git credentials (if needed)
 
-   ✅ Offer two setup paths:
+   - Offer two setup paths:
 
       Option A: For Contributors (minimal tools for just docs)
       Option B: For Developers (includes linting & extra tools)
 
 
->⚠️ **Important**: The template contains placeholders that must be replaced before the project will build.
+>**Important**: The template contains placeholders that must be replaced before the project will build.
 >
 >If you see an error like `project.name must match pattern...`, it means you haven't updated `pyproject.toml` yet.
 >
 >Stop here and complete the [Find-and-Replace Checklist](#-find-and-replace-checklist) below, then run `./setup_for_contributors.sh` again.
 
-## 3. Building Documentation Locally
+## 3. Building Documentation Manually (OPTIONAL)
 
-Once the setup script completes successfully, build the docs:
-```
-poetry run sphinx-build -b html docs/source docs/_build/html
-```
-Open docs/_build/html/index.html in your browser (or use a VSCodium extension preview) to view the documentation.
+This is one of the steps the script is running under the hood:
 
-## 4. Write content (manually)
+```
+   poetry lock
+   poetry install --with docs
+```
+
+This is what you would type into a terminal in order to 'build' the docs.
+
+You can additionally run `live_preview.sh` to **preview** the docs as you work on them, though it needs something installed first:
+
+```bash
+poetry add sphinx-autobuild --group dev
+
+## 4. Write content
 
 Open the `docs/source/` folder in your text editor and start editing:
 
@@ -91,7 +167,7 @@ The index.rst file is more robust using reStructuredText, but can be done in Mar
 
 >RTD in other projects you encounter may include only RST files since more complex projects will find .md insufficient organisationally.
 
->⚠️ This setup assumes you are not automating your content from a coding project. There are good reasons to write manually for code for smaller projects even when there **is** code involved. Further, if you decide to add this functionality later, this >is possible via the included `.setup-python.sh`.
+>This setup assumes you are not automating your content from a coding project. There are good reasons to write manually for code for smaller projects even when there **is** code involved. Further, if you decide to add this functionality later, this >is possible via the included `.setup-python.sh`.
 
 ## 5. Hosting Your Documentation
 
@@ -197,14 +273,15 @@ To keep both in sync there is a GitHub Actions workflow that deploys to both see
 [REPO-NAME]/
 ├── docs/
 │   ├── source/           # Documentation source files (.rst)
-│   │   ├── conf.py       # Sphinx configuration
+│   │   ├── conf.py       # Sphinx configuration - Placeholders are here
 │   │   └── index.rst     # Main documentation page
 │   └── _build/           # Generated HTML (ignored by Git)
-├── hooks/                # Git hook scripts
-├── setup-hooks.sh        # Hook installation scripts if used
 ├── pyproject.toml        # Poetry dependencies
 └── README.md             # This file, should be replaced by the template filled out
 ```
+
+You'll see a lot more files than that but those are more or less optional, and there to give you a head start. Delete what you don't need.
+
 `/source` is where you will be editing files, be it the `conf.py`, `.rst` files or `.md` files. Once you "build" the docs locally `/docs` will also have `/_build` in it. These are files that are written and rewritten each time, normally in html (but this is configurable). These are what the websites are really using, not your `/source` files, which are for editing. Sphinx is converting your instructions to html.
 
 ### First-Time Setup Checklist
@@ -232,11 +309,11 @@ When creating a new project from this template, before your first commit, search
 | `[YOUR NAME]` | Your actual name |
 | `[LICENSE NAME]` | Your chosen license (e.g., `MIT`, `CC-BY-SA-4.0`) |
 
-> Look through all the files by hand too. Many contain extra notes I've left that explain certain entries more, and have blanks I may have missed (let me know if you find any!).
+> Look through all the files by hand too. Many contain extra notes I've left that explain certain entries more, and have blanks I may have missed - these files have changed a lot over time! Let me know if you find any!
 
 ### Recommended VSCode/VSCodium Extensions
 
-While not required, these extensions enhance the editing experience for this project:
+While not required, these VSCodium extensions enhance the editing experience for this project:
 
 | Extension | Purpose | Install Link |
 | :--- | :--- | :--- |
@@ -248,7 +325,7 @@ While not required, these extensions enhance the editing experience for this pro
 | **Highlight Trailing Whitespace** | Good for keeping docs clean | [Install](vscode:extension/ybaumes.highlight-trailing-white-spaces) |
 | **Markdown Editor** | Useful if intending to use Markdown | [Install](vscode:extension/zaaack.markdown-editor) |
 
-> *Use [reStructuredText (formerly Tweag)](vscode:extension/lextudio.restructuredtext) if you need advanced RST formatting.
+> *Use [reStructuredText (formerly Tweag)](vscode:extension/lextudio.restructuredtext) if you need advanced RST formatting highlighting.
 
 > **Tip:** Click the "Install" link above to open VS Code directly and install the extension!
 
