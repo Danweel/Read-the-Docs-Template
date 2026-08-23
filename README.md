@@ -20,20 +20,20 @@
 - Projects where the documentation is tightly/automatically coupled to source code
 
 Setting up Sphinx + Read the Docs from scratch involves a surprising
-number of interconnected decisions. Further, you can't just set `package-mode = false` in a Poetry project once you've built it in order to turn 'off' package functions. This version of the RTD template is focussed on **non-package docs-only** documentation projects, for when you don't have an application you're trying to auto-doc. It should be more common than it is, but I feel like setting up the environment to write documentation in a semi-professional way is too much of a wall for most, the way it's presented on RTD and Sphinx. Here, I've created a repo that's nearly ready to go already. These tools are powerful and the way I have it set up is not the only way to do it, but it prevents at least some of the hurdles I faced trying to set up a simple site.
+number of interconnected decisions. Further, you can't just set `package-mode = false` in a Poetry project once you've built it in order to turn 'off' package functions. This version of the RTD template is focused on **non-package docs-only** documentation projects, for when you don't have an application you're trying to auto-doc. It should be more common than it is, but I feel like setting up the environment to write documentation in a semi-professional way is too much of a wall for most, the way it's presented on RTD and Sphinx. Here, I've created a repo that's nearly ready to go already. These tools are powerful and the way I have it set up is not the only way to do it, but it prevents at least some of the hurdles I faced trying to set up a simple site.
 
 ### The Problems
 
 1. **Sphinx version drift**: Read the Docs reads dependencies from
    `requirements.txt`, while local development reads from `pyproject.toml`.
-   Because there's no package, the default process sometimes gets confusd and starts installing the wrong Sphinx into the project on build.
+   Because there's no package, the default process sometimes gets confused and starts installing the wrong Sphinx into the project on build.
 
 2. **Autodoc errors**: Sphinx's `autodoc` extension tries to import
    Python packages to extract docstrings. In a docs-only project, there's
    no package to import. The common workaround is `autodoc_mock_imports`
    to silence the errors but you can also just removes `autodoc` entirely, along with `viewcode`, `napoleon`, and the `sys.path` manipulation.
 
-3. **Poetry extras vs. PEP 621 extras**: Poetry is sometimes compliacted to
+3. **Poetry extras vs. PEP 621 extras**: Poetry is sometimes complicated to
    work with. Poetry's `[tool.poetry.extras]`
    and PEP 621's `[project.optional-dependencies]` look similar but are
    not interchangeable. `pip install .[docs]` only reads PEP 621 extras;
@@ -43,7 +43,7 @@ number of interconnected decisions. Further, you can't just set `package-mode = 
    you must add `[project.optional-dependencies]` or RTD will silently
    skip your dependencies. It's better to just build the project with packages from the start rather than switch half-way because of this. Building either-or from scratch is simpler than modifying everything to work after the fact.
 
-4. **Some minor settings and archetecture-pre set up**: Sphinx can output to `_build/`, `build/`, `html/`, or any directory. Different tutorials use different paths. This template standardizes on `docs/_build/` and ignores it in `.gitignore` so you're not uploading extra files, too. And a few other useful files as well, standard things you'd find in a repo.
+4. **Some minor settings and architecture-pre set up**: Sphinx can output to `_build/`, `build/`, `html/`, or any directory. Different tutorials use different paths. This template standardizes on `docs/_build/` and ignores it in `.gitignore` so you're not uploading extra files, too. And a few other useful files as well, standard things you'd find in a repo.
 
 [![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 
@@ -70,7 +70,7 @@ number of interconnected decisions. Further, you can't just set `package-mode = 
 
 If you are not sure, the script will inform you which are missing and safely exit when you try to run it.
 
-If you are aware you do not have Python3.11+ or Git installed, install these from thier respective websites.
+If you are aware you do not have Python3.11+ or Git installed, install these from their respective websites.
 Recommended is [Python 3.12](https://www.python.org/downloads/), and [Github Desktop](https://desktop.github.com/download/) if you have no other experience or preference.
 
 The script will detect your OS and install [Poetry](https://python-poetry.org/) for you automatically.
@@ -112,7 +112,7 @@ with the right setup.
 
 Or use Github Desktop to clone the `.git` at the URL above via the onscreen directions.
 
-## 2. Open the local folder for the repo and run `./setup_for_contributors.sh`
+## 2. Open the local folder for the repo and run `./setup.sh`
 
 The script will:
 
