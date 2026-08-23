@@ -54,6 +54,7 @@ sphinx-copybutton = "^0.5.2"
 sphinx-notfound-page = "^1.0.0"
 groundwork-sphinx-theme = "^1.1.1"
 myst-parser = "^5.0.0"
+sphinx-autobuild = ">=2024.10.0" 
 
 # because these are defined in the Core dependencies, this isn't strictly needed, but I'm using it in the setup script for clarity.
 # Keep myst_parser if you want full .md page support
@@ -66,6 +67,7 @@ sphinx-copybutton = "^0.5.2"
 sphinx-notfound-page = "^1.0.0"
 groundwork-sphinx-theme = "^1.1.1"
 myst-parser = "^5.0.0"
+sphinx-autobuild = ">=2024.10.0" 
 
 # Keep myst_parser if you want full .md page support
 
