@@ -31,45 +31,79 @@ requires-python = ">=3.11"
 # need `pip install .` to work), use Read-the-Docs-Template-Package instead:
 # https://github.com/Danweel/Read-the-Docs-Template-Package
 
- [tool.poetry]          # Don't need this group with autodoc2 - enable if using standard autodoc
+# Don't need this group with autodoc2 - enable if using standard autodoc
+ [tool.poetry]
  package-mode = false
  packages = []
+# Tells Poetry not to expect a Python package
 
- # Tells Poetry not to expect a Python package (for now, we can add the script optionally later)
-# No Python package to install
+# This is for spellchecking.
+[tool.codespell]
+skip = '*.lock,*.bib,docs/_build,.git,_build,*.svg,*.png,*.ico'
+check-hidden = true
+ignore-words-list = ''
+count = true
 
 # -----------------------------------------------------------------
 # Poetry Dependency Groups
 # -----------------------------------------------------------------
 # Used with: `poetry install --with docs`  OR  --with dev
-# Yes, they are the same in this version - there's no differnce between them. This is just to standardize a few of the instructions.
+# Yes, they are the same in this version - there's no differnce between them. 
+# This is just to standardize a few of the instructions.
 # Read the Docs does NOT read from these; it uses requirements.txt.
-# Keep requirements.txt and these groups in sync when adding packages.
+# Keep pyproject.toml and these groups in sync when adding packages.
+
+# To regenerate requirements.txt after changes:
+#   poetry export -f requirements.txt --output requirements.txt --without-hashes
 
 [tool.poetry.group.docs.dependencies]  # use `poetry install --with docs` for regular contributors (light, strips out unnecessary tools)
 sphinx = ">=8.0,<9.0"
-readthedocs-build = "^2.0"
+sphinx-design = ">=0.6.0"
+sphinxcontrib-bibtex = ">=2.6.0"
 sphinxcontrib-mermaid = "^2.0.1"
 sphinx-copybutton = "^0.5.2"
 sphinx-notfound-page = "^1.0.0"
-groundwork-sphinx-theme = "^1.1.1"
 myst-parser = "^5.0.0"
-sphinx-autobuild = ">=2024.10.0" 
-
-# because these are defined in the Core dependencies, this isn't strictly needed, but I'm using it in the setup script for clarity.
-# Keep myst_parser if you want full .md page support
+sphinx-autobuild = ">=2024.10.0"
+furo = ">=2024.8.6"
+groundwork-sphinx-theme = "^1.1.1"
+readthedocs-build = "^2.0"
+codespell = ">=2.2.0"
+sphinxext-opengraph = ">=0.9.0"
+sphinx-favicon = ">=2.0.0"
+sphinx-hoverxref = ">=1.4.0"
+sphinx-tags = ">=0.4.0"
+sphinx-last-updated-by-git = ">=1.0.0"
+sphinxext-opengraph = ">=0.9.0"
+sphinx-version-warning = ">=1.1.0"
+sphinx-navtree = ">=0.3.0"
+jupinx = ">=0.9.0"
+codespell = ">=2.2.0"
 
 [tool.poetry.group.dev.dependencies]   # use `poetry install --with dev` to install everything required to maintain the Read the Docs project.
 sphinx = ">=8.0,<9.0"
-readthedocs-build = "^2.0"
+sphinx-design = ">=0.6.0"
+sphinxcontrib-bibtex = ">=2.6.0"
 sphinxcontrib-mermaid = "^2.0.1"
 sphinx-copybutton = "^0.5.2"
 sphinx-notfound-page = "^1.0.0"
-groundwork-sphinx-theme = "^1.1.1"
 myst-parser = "^5.0.0"
-sphinx-autobuild = ">=2024.10.0" 
+sphinx-autobuild = ">=2024.10.0"
+furo = ">=2024.8.6"
+groundwork-sphinx-theme = "^1.1.1"
+readthedocs-build = "^2.0"
+codespell = ">=2.2.0"
+sphinxext-opengraph = ">=0.9.0"
+sphinx-favicon = ">=2.0.0"
+sphinx-hoverxref = ">=1.4.0"
+sphinx-tags = ">=0.4.0"
+sphinx-last-updated-by-git = ">=1.0.0"
+sphinxext-opengraph = ">=0.9.0"
+sphinx-version-warning = ">=1.1.0"
+sphinx-navtree = ">=0.3.0"
+jupinx = ">=0.9.0"
+codespell = ">=2.2.0"
 
-# Keep myst_parser if you want full .md page support
 
 # -----------------------------------------------------------------
 # Theme Alternatives (Choose ONE — Leave the others commented out)
@@ -77,8 +111,8 @@ sphinx-autobuild = ">=2024.10.0"
 # Replace groundwork-sphinx-theme above with one of these if preferred.
 # Remember to also update html_theme in docs/source/conf.py.
 #
-# Furo (clean, modern, dark/light mode):
-#   furo = ">=2024.8.6"
+Furo (clean, modern, dark/light mode):
+    furo = ">=2024.8.6"
 #
 # Sphinx RTD Theme (classic, widely recognized):
 #   sphinx-rtd-theme = ">=2.0.0"
@@ -86,15 +120,36 @@ sphinx-autobuild = ">=2024.10.0"
 # Sphinx Book Theme (long-form docs, book style):
 #   sphinx-book-theme = ">=1.0.0"
 
-# -----------------------------------------------------------------
-# Optional Documentation Enhancements (Uncomment and add to lists and .conf if wanted)
-# -----------------------------------------------------------------
-# Add these to the `docs` group above if you need them:
-#
-# sphinx-design = ">=0.6.0"            # Cards, tabs, panels — great for guides
-# sphinxcontrib-bibtex = ">=2.5.0"     # BibTeX bibliography support
-# sphinx-autobuild = ">=2021.3.14"     # Live reload during doc development
-# sphinxext-opengraph = ">=0.9.0"      # Social media preview cards
-# codespell = ">=2.2.0"                # Spell-check documentation
+# Make sure any packages you add here are reflected in the /docs/source/conf.py 
+as well. You may have to look up the name format for both files.
 
-# Make sure the same packages here are reflected in the /docs/source/conf.py as well. You may have to look up the name format for both files.
+# ──────────────────────────────────────────────────────────────────
+# EXTENSION ↔ PACKAGE NAME CHECKLIST
+# ──────────────────────────────────────────────────────────────────
+# Before committing, if you've changed something, verify each extension in conf.py has its
+# corresponding package in pyproject.toml, for example:
+#
+#   conf.py extension            | pyproject.toml package
+#   ─────────────────────────────┼─────────────────────────────────
+#   sphinx.ext.intersphinx       | (built-in)
+#   sphinx.ext.todo              | (built-in)
+#   sphinx.ext.mathjax           | sphinx (built-in)
+#   myst_parser                  | myst-parser
+#   sphinx_design                | sphinx-design
+#   sphinxcontrib.mermaid        | sphinxcontrib-mermaid
+#   sphinxcontrib.bibtex         | sphinxcontrib-bibtex
+#   notfound.extension           | sphinx-notfound-page
+#   sphinx_copybutton            | sphinx-copybutton
+#   sphinx_favicon               | sphinx-favicon
+#   sphinx_hoverxref             | sphinx-hoverxref
+#   sphinx_tags                  | sphinx-tags
+#   sphinx_navtree               | sphinx-navtree
+#   sphinx_last_updated_by_git   | sphinx-last-updated-by-git
+#   sphinxext.opengraph          | sphinxext-opengraph
+#   sphinx_version_warning       | sphinx-version-warning
+#   jupinx                       | jupinx
+#   sphinxcontrib.spelling       | sphinxcontrib-spelling
+#
+#   Tip: Extension names often differ from package names!
+#        Example: sphinx-copybutton (pip) → sphinx_copybutton (conf.py)
+# ──────────────────────────────────────────────────────────────────

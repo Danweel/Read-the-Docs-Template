@@ -1,12 +1,11 @@
 {
-    "recommendations": [
-        "matt-rudge.auto-open-preview-panel",
-        "swyddfa.esbonio",
-        "zaaack.markdown-editor",
-        "github.vscode-pull-request-github",
-        "myst_parser",
-        "lextudio.restructuredtext",
-        "trond-snekvik.simple-rst",
-        "ybaumes.highlight-trailing-white-spaces",
-    ]
+  "recommendations": [
+    "trond-snekvik.simple-rst",
+    "esbonio.esbonio",
+    "esbenp.prettier-vscode",
+    "gitkraken.gitlens",
+    "matt-rudge.auto-open-preview-panel",
+    "ybaumes.highlight-trailing-white-spaces",
+    "zaaack.markdown-editor"
+  ]
 }
