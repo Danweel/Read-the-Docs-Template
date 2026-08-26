@@ -78,7 +78,6 @@ sphinx-navtree = ">=0.3.0"
 jupinx = ">=0.9.0"
 codespell = ">=2.2.0"
 linkify-it-py = "^2.0.0"
-linkify-it-py = "^2.0.0"
 
  # use `poetry install --with dev` to install everything required to maintain the Read the Docs project.
 [tool.poetry.group.dev.dependencies]
@@ -102,7 +101,6 @@ sphinx-version-warning = ">=1.1.0"
 sphinx-navtree = ">=0.3.0"
 jupinx = ">=0.9.0"
 codespell = ">=2.2.0"
-linkify-it-py = "^2.0.0"
 linkify-it-py = "^2.0.0"
 
 
