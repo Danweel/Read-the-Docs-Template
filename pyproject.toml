@@ -16,8 +16,8 @@ readme = "README.md"
 license = {text = "CC-BY-SA-4.0"}
 # licence files = ["LICENSE"]  #OPTIONAL, points to a licence file
 authors = [
-    {name = "NAME", email = "AUTHOREMAIL"}, # it does check for an email
-    {name = "NAME2"}          # optional second author
+    {name = "NAME", email = "AUTHOREMAIL"},
+    {name = "NAME2"}
 ]
 
 requires-python = ">=3.11"
@@ -32,9 +32,8 @@ requires-python = ">=3.11"
 # https://github.com/Danweel/Read-the-Docs-Template-Package
 
 # Don't need this group with autodoc2 - enable if using standard autodoc
- [tool.poetry]
- package-mode = false
- packages = []
+[tool.poetry]
+package-mode = false
 # Tells Poetry not to expect a Python package
 
 # This is for spellchecking.
@@ -48,7 +47,7 @@ count = true
 # Poetry Dependency Groups
 # -----------------------------------------------------------------
 # Used with: `poetry install --with docs`  OR  --with dev
-# Yes, they are the same in this version - there's no differnce between them. 
+# Yes, they are the same in this version - there's no differnce between them.
 # This is just to standardize a few of the instructions.
 # Read the Docs does NOT read from these; it uses requirements.txt.
 # Keep pyproject.toml and these groups in sync when adding packages.
@@ -56,7 +55,8 @@ count = true
 # To regenerate requirements.txt after changes:
 #   poetry export -f requirements.txt --output requirements.txt --without-hashes
 
-[tool.poetry.group.docs.dependencies]  # use `poetry install --with docs` for regular contributors (light, strips out unnecessary tools)
+# use `poetry install --with docs` for regular contributors (light, strips out unnecessary tools)
+[tool.poetry.group.docs.dependencies]
 sphinx = ">=8.0,<9.0"
 sphinx-design = ">=0.6.0"
 sphinxcontrib-bibtex = ">=2.6.0"
@@ -68,19 +68,20 @@ sphinx-autobuild = ">=2024.10.0"
 furo = ">=2024.8.6"
 groundwork-sphinx-theme = "^1.1.1"
 readthedocs-build = "^2.0"
-codespell = ">=2.2.0"
 sphinxext-opengraph = ">=0.9.0"
 sphinx-favicon = ">=2.0.0"
 sphinx-hoverxref = ">=1.4.0"
 sphinx-tags = ">=0.4.0"
 sphinx-last-updated-by-git = ">=1.0.0"
-sphinxext-opengraph = ">=0.9.0"
 sphinx-version-warning = ">=1.1.0"
 sphinx-navtree = ">=0.3.0"
 jupinx = ">=0.9.0"
 codespell = ">=2.2.0"
+linkify-it-py = "^2.0.0"
+linkify-it-py = "^2.0.0"
 
-[tool.poetry.group.dev.dependencies]   # use `poetry install --with dev` to install everything required to maintain the Read the Docs project.
+ # use `poetry install --with dev` to install everything required to maintain the Read the Docs project.
+[tool.poetry.group.dev.dependencies]
 sphinx = ">=8.0,<9.0"
 sphinx-design = ">=0.6.0"
 sphinxcontrib-bibtex = ">=2.6.0"
@@ -92,17 +93,17 @@ sphinx-autobuild = ">=2024.10.0"
 furo = ">=2024.8.6"
 groundwork-sphinx-theme = "^1.1.1"
 readthedocs-build = "^2.0"
-codespell = ">=2.2.0"
 sphinxext-opengraph = ">=0.9.0"
 sphinx-favicon = ">=2.0.0"
 sphinx-hoverxref = ">=1.4.0"
 sphinx-tags = ">=0.4.0"
 sphinx-last-updated-by-git = ">=1.0.0"
-sphinxext-opengraph = ">=0.9.0"
 sphinx-version-warning = ">=1.1.0"
 sphinx-navtree = ">=0.3.0"
 jupinx = ">=0.9.0"
 codespell = ">=2.2.0"
+linkify-it-py = "^2.0.0"
+linkify-it-py = "^2.0.0"
 
 
 # -----------------------------------------------------------------
@@ -111,7 +112,7 @@ codespell = ">=2.2.0"
 # Replace groundwork-sphinx-theme above with one of these if preferred.
 # Remember to also update html_theme in docs/source/conf.py.
 #
-Furo (clean, modern, dark/light mode):
+# Furo (clean, modern, dark/light mode):
     furo = ">=2024.8.6"
 #
 # Sphinx RTD Theme (classic, widely recognized):
@@ -120,8 +121,9 @@ Furo (clean, modern, dark/light mode):
 # Sphinx Book Theme (long-form docs, book style):
 #   sphinx-book-theme = ">=1.0.0"
 
-# Make sure any packages you add here are reflected in the /docs/source/conf.py 
-as well. You may have to look up the name format for both files.
+# Remember to also update html_theme in docs/source/conf.py.
+# Make sure any packages you add here are reflected in docs/source/conf.py.
+# Package names and extension names sometimes differ — check both files.
 
 # ──────────────────────────────────────────────────────────────────
 # EXTENSION ↔ PACKAGE NAME CHECKLIST

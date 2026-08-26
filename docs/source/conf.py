@@ -186,7 +186,6 @@ tags_extension = ["rst", "md"]
 # Generates social media preview cards when links are shared.
 # IMPORTANT: Replace [USERNAME] and [REPO-NAME] with actual values!
 
-ogp_site_url = "https://[USERNAME].github.io/[REPO-NAME]/"
 
 ogp_site_url = "https://[USERNAME].github.io/[REPO-NAME]/"
 ogp_image = "_static/og-image.png"
