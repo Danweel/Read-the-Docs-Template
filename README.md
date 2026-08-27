@@ -6,6 +6,9 @@ who need professional docs without a Python package.
 Hosted on [Read the Docs](https://readthedocs.org) with a GitHub Pages
 fallback. Includes some reasonable defaults that you can change: Furo theme, Markdown support, diagrams, citations, spell-checking, and live preview.
 
+Speaking of Researchers, if you're looking to write a thesis, this isn't ideal. However, this is! https://github.com/jterrace/sphinxtr
+Please check him out if you're looking to produce a publishable thesis once you're done. 
+
 ---
 
 ## Quick Start
